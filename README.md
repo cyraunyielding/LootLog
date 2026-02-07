@@ -1,0 +1,2 @@
+# LootLog
+Reading Tracker POC
