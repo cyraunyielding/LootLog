@@ -14,5 +14,5 @@ loginBtn?.addEventListener('click', async (e) => {
         password: passInput.value,
     });
     if (error) alert(error.message);
-    else window.location.href = '/dashboard.html';
+    else window.location.href = '/dashboard';
 });
