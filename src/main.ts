@@ -1,8 +1,8 @@
-import { handleSignIn, handleSignUp } from './components/Auth';
+import { signIn, signUp } from './api/authService';
 
 /**
- * WHY: Main Controller for Authentication
- * HOW: Listens for UI events and uses the Auth component to talk to Supabase.
+ * WHY: UI Controller for the Entry Gate.
+ * HOW: Hooks into the auth service to manage user entry.
  */
 
 const loginBtn = document.getElementById('loginBtn');
@@ -10,32 +10,16 @@ const signUpBtn = document.getElementById('signUpBtn');
 const emailInput = document.getElementById('email') as HTMLInputElement;
 const passInput = document.getElementById('password') as HTMLInputElement;
 
-loginBtn?.addEventListener('click', async (e) => {
-    e.preventDefault();
-    const email = emailInput.value;
-    const password = passInput.value;
-
-    if (!email || !password) return alert("Enter credentials, Adventurer!");
-
-    const result = await handleSignIn(email, password);
-    if (result.success) {
+loginBtn?.addEventListener('click', async () => {
+    const res = await signIn(emailInput.value, passInput.value);
+    if (res.success) {
         window.location.href = '/dashboard.html';
     } else {
-        alert("Access Denied: " + result.message);
+        alert(`Access Denied: ${res.message}`);
     }
 });
 
-signUpBtn?.addEventListener('click', async (e) => {
-    e.preventDefault();
-    const email = emailInput.value;
-    const password = passInput.value;
-
-    if (!email || !password) return alert("Email and Key required!");
-
-    const result = await handleSignUp(email, password);
-    if (result.success) {
-        alert("Guild Invitation Sent! Check your email to verify your account.");
-    } else {
-        alert("Enrollment Failed: " + result.message);
-    }
+signUpBtn?.addEventListener('click', async () => {
+    const res = await signUp(emailInput.value, passInput.value);
+    alert(res.message);
 });
