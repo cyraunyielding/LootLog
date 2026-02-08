@@ -9,22 +9,32 @@
 <body class="bg-slate-900 text-white min-h-screen p-6">
     <div class="max-w-4xl mx-auto">
         <header class="flex justify-between items-center mb-8 border-b border-slate-800 pb-4">
-            <h1 class="text-2xl font-bold text-blue-400 font-mono">LOOTLOG DASHBOARD</h1>
-            <button onclick="window.location.href='/'" class="text-xs bg-red-900/30 text-red-400 px-4 py-2 rounded border border-red-900/50 hover:bg-red-900/50">Leave Kingdom</button>
+            <h1 class="text-2xl font-bold text-blue-400 font-mono tracking-widest uppercase">LootLog</h1>
+            <button onclick="window.location.href='/'" class="text-xs bg-red-900/30 text-red-400 px-4 py-2 rounded border border-red-900/50 hover:bg-red-800 transition-colors">Logout</button>
         </header>
+        
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-slate-800 p-6 rounded-xl border border-blue-500/20 shadow-xl">
-                <p class="text-slate-400 text-xs uppercase font-bold tracking-widest">Total Gold Earned</p>
-                <h3 class="text-4xl font-bold text-yellow-500 mt-2">0 🪙</h3>
+            <div class="bg-slate-800 p-6 rounded-xl border border-blue-500/20 shadow-xl text-center">
+                <p class="text-slate-400 text-xs uppercase font-bold tracking-widest">Total Gold</p>
+                <h3 id="goldDisplay" class="text-4xl font-bold text-yellow-500 mt-2">0 🪙</h3>
             </div>
-            <div class="md:col-span-2 bg-slate-800 p-6 rounded-xl border border-slate-700">
-                <h3 class="text-xl font-bold mb-4">Current Quests</h3>
-                <div class="h-32 flex flex-col items-center justify-center border-2 border-dashed border-slate-700 rounded-lg text-slate-500">
-                    <p class="italic">The quest board is empty.</p>
-                    <button class="mt-2 text-blue-400 hover:underline text-sm font-bold">+ LOG FIRST BOOK</button>
+
+            <div class="md:col-span-2 bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-lg">
+                <h3 class="text-xl font-bold mb-4 text-blue-400">Log Your Quest</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="flex flex-col gap-1">
+                        <label class="text-[10px] text-slate-500 uppercase font-bold px-1">Book Name</label>
+                        <input type="text" id="bookTitle" placeholder="The Hobbit..." class="bg-slate-900 border border-slate-700 rounded p-2 outline-none focus:border-blue-500 transition-all">
+                    </div>
+                    <div class="flex flex-col gap-1">
+                        <label class="text-[10px] text-slate-500 uppercase font-bold px-1">Pages Read</label>
+                        <input type="number" id="pageCount" placeholder="25" class="bg-slate-900 border border-slate-700 rounded p-2 outline-none focus:border-blue-500 transition-all">
+                    </div>
                 </div>
+                <button id="completeQuestBtn" class="mt-6 w-full bg-blue-600 hover:bg-blue-500 font-bold py-3 rounded transition-all uppercase text-sm tracking-widest shadow-[0_0_15px_rgba(37,99,235,0.4)]">Claim Rewards</button>
             </div>
         </div>
     </div>
+    <script type="module" src="/src/dashboard.ts"></script>
 </body>
 </html>

@@ -1,50 +1,49 @@
+import { supabase } from './api/supabaseClient';
 import { calculateRewards } from './logic/rewards';
-import { submitReadingLog, updateChildStats, getChildProfile } from './api/dataService';
-import { ReadingLog } from './types/schema';
 
 /**
- * WHY: Orchestrates the 'Blue Box' workflow for the User Interface.
- * HOW: Takes UI input, processes through Modular Logic, and saves via Scalable Infrastructure.
+ * Modular Logic Connection
+ * Why: Every function must include JSDoc comments explaining the 'Why' and 'How'.
+ * How: Uses the calculateRewards logic to update the Supabase database.
  */
 
 const questBtn = document.getElementById('completeQuestBtn');
-const titleInput = document.getElementById('bookTitle') as HTMLInputElement;
-const pagesInput = document.getElementById('pageCount') as HTMLInputElement;
+const goldDisplay = document.getElementById('goldDisplay');
 
 questBtn?.addEventListener('click', async () => {
-    const title = titleInput.value;
+    const titleInput = document.getElementById('bookTitle') as HTMLInputElement;
+    const pagesInput = document.getElementById('pageCount') as HTMLInputElement;
+    
     const pages = parseInt(pagesInput.value);
+    const title = titleInput.value;
 
-    // 1. Safety Gate: Basic Validation
-    if (!title || isNaN(pages) || pages <= 0) {
-        return alert("Adventurer, please enter a valid book title and page count!");
+    if (!title || isNaN(pages)) {
+        alert("Enter your book title and pages read!");
+        return;
     }
 
-    // 2. Modular Logic: Calculate Rewards
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return alert("Session expired. Please log in again.");
+
+    // Call Modular Logic
     const rewards = calculateRewards(pages);
 
-    // 3. Infrastructure: Save the Log
-    // Note: In a real app, 'user_id' comes from your Supabase Auth session
-    const newEntry: Partial<ReadingLog> = {
+    // Update Database
+    const { error } = await supabase.from('reading_logs').insert([{
+        user_id: user.id,
         book_title: title,
         pages_read: pages,
         gold_earned: rewards.goldEarned,
-        xp_earned: rewards.xpEarned,
-        date: new Date().toISOString()
-    };
-
-    const { error } = await submitReadingLog(newEntry);
+        xp_earned: rewards.xpEarned
+    }]);
 
     if (error) {
-        console.error("Database Error:", error.message);
-        alert("Quest failed to save to the kingdom records.");
+        console.error(error);
+        alert("Quest log failed. Check your connection.");
     } else {
-        alert(`⚔️ Victory! You earned ${rewards.goldEarned} Gold and ${rewards.xpEarned} XP!`);
-        
-        // Reset the UI
+        alert(`Success! You earned ${rewards.goldEarned} Gold!`);
+        if (goldDisplay) goldDisplay.innerText = `${rewards.goldEarned} 🪙`;
         titleInput.value = '';
         pagesInput.value = '';
-        
-        // Next Step: Trigger a UI refresh to show the new gold total
     }
 });
