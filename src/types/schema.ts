@@ -9,6 +9,8 @@ export interface ChildProfile {
   name: string;
   age: number;
   total_gold: number;
+  current_level: number;
+  total_xp: number;
   current_streak: number;
   created_at: string;
 }
@@ -19,6 +21,7 @@ export interface ReadingLog {
   book_title: string;
   pages_read: number;
   gold_earned: number;
+  xp_earned: number;
   date: string;
 }
 
