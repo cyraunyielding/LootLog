@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LootLog | Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-white min-h-screen p-6">
+    <div class="max-w-4xl mx-auto">
+        <header class="flex justify-between items-center mb-8 border-b border-slate-800 pb-4">
+            <h1 class="text-2xl font-bold text-blue-400 font-mono">LOOTLOG DASHBOARD</h1>
+            <button onclick="window.location.href='/'" class="text-xs bg-red-900/30 text-red-400 px-4 py-2 rounded border border-red-900/50 hover:bg-red-900/50 transition-all">Leave Kingdom</button>
+        </header>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-slate-800 p-6 rounded-xl border border-blue-500/20 shadow-xl">
+                <p class="text-slate-400 text-xs uppercase font-bold tracking-widest">Total Gold Earned</p>
+                <h3 class="text-4xl font-bold text-yellow-500 mt-2">0 🪙</h3>
+            </div>
+            <div class="md:col-span-2 bg-slate-800 p-6 rounded-xl border border-slate-700">
+                <h3 class="text-xl font-bold mb-4">Current Quests</h3>
+                <div class="h-32 flex flex-col items-center justify-center border-2 border-dashed border-slate-700 rounded-lg">
+                    <p class="text-slate-500 italic">The quest board is empty.</p>
+                    <button class="mt-2 text-blue-400 hover:underline text-sm">+ Log your first book</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
